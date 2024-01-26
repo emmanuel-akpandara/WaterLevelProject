@@ -1,0 +1,12 @@
+firebase_admin
+streamlit
+streamlit_option_menu
+folium
+geocoder
+opencage
+pandas
+plotly
+requests
+streamlit-folium
+python-decouple
+
