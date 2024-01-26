@@ -7,17 +7,17 @@ from firebase_admin import auth
 
 
 cred = credentials.Certificate({
-    "type": st.secrets["type"],
-    "project_id": st.secrets["project_id"],
-    "private_key_id": st.secrets["private_key_id"],
-    "private_key": st.secrets["private_key"],
-    "client_email": st.secrets["client_email"],
-    "client_id": st.secrets["client_id"],
-    "auth_uri": st.secrets["auth_uri"],
-    "token_uri": st.secrets["token_uri"],
-    "auth_provider_x509_cert_url": st.secrets["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": st.secrets["client_x509_cert_url"],
-    "universe_domain": st.secrets["universe_domain"]
+    "type": st.secrets["TYPE"],
+    "project_id": st.secrets["PROJECT_ID"],
+    "private_key_id": st.secrets["PRIVATE_KEY_ID"],
+    "private_key": st.secrets["PRIVATE_KEY"],
+    "client_email": st.secrets["CLIENT_EMAIL"],
+    "client_id": st.secrets["CLIENT_ID"],
+    "auth_uri": st.secrets["AUTH_URI"],
+    "token_uri": st.secrets["TOKEN_URI"],
+    "auth_provider_x509_cert_url": st.secrets["AUTH_PROVIDER_X509_CERT_URL"],
+    "client_x509_cert_url": st.secrets["CLIENT_X509_CERT_URL"],
+    "universe_domain": st.secrets["UNIVERSE_DOMAIN"]
 })
 # cred = credentials.Certificate('gitguardians-app-2e4d25999060.json')
 firebase_admin.initialize_app(cred)
