@@ -25,13 +25,12 @@ class MultiApp:
     def run():
             # app = st.sidebar(
             with st.sidebar:        
-                icons = ['👤','💬','🌊','📤','📁','ℹ️']
-
+                
                 app = option_menu(
                     menu_title='Water Guardian',
                     options=['Account', 'Report', 'Water Levels', 'Upload File', 'Files', 'About'],
-                    icons=icons,
-                    menu_icon='🛡️',  # You can choose a different emoji for the menu icon
+                    icons=['person-circle','chat-fill','water','cloud-upload','list-task','info-circle-fill'],
+                    menu_icon='shield',  # You can choose a different emoji for the menu icon
                     default_index=1,
                     styles={
                         "container": {"padding": "5!important", "background-color": 'black'},
