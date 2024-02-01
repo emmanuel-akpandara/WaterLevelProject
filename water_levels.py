@@ -9,9 +9,8 @@ from firebase_admin import firestore
   
 def app():
     # # Node-RED API endpoint
-    readings_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/readingstable"
-    stations_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/stationstable"
-
+    readings_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/app/readings"
+    stations_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/app/stations"
     # User credentials for basic authentication
     username = "group2"
     password = "4KuN8i52qWGz8HULbBHuaZyT"
@@ -21,14 +20,11 @@ def app():
     def get_stations():
         node_red_api_endpoint = stations_endpoint
 
-        # Modify the query to include the selected station
-        station_query = f"SELECT id,stationname FROM station;"
         # Make a GET request to Node-RED with basic authentication
-        response = requests.post(
+        response = requests.get(
             node_red_api_endpoint,
-            json={"query": station_query},
             auth=(username, password)
-        )
+            )
         if response.status_code == 200:
             data = response.json()
             df = pd.json_normalize(data)
@@ -38,8 +34,21 @@ def app():
             st.error(f"Error from Node-RED: {response.status_code} - {response.text}")
             return []
         
+    def get_threshold(user_email):
+        threshold_endpoint = f"https://node-red-group2.smartville-poc.mycsn.be/threshold?email={user_email}"
+        response = requests.get(threshold_endpoint, auth=(username, password))
+        print("function called")
+        if response.status_code == 200:
+            data = response.json()
+            print("successfully fetched threshold")
+            if data:
+                # print(data[0]['stationid'])
+                # return data[0]['threshold']
+                return data[0]
+                
+        return None
     
-    def fetch_data_and_plot(time_range, selected_station):
+    def fetch_data_and_plot(time_range, selected_station, user_email):
         node_red_api_endpoint = readings_endpoint
 
         # Generate the query based on the selected time range and station
@@ -60,15 +69,20 @@ def app():
         # Extract the ID from the selected station tuple
         selected_station_id = selected_station[1]
 
-        # Modify the query to include the selected station
-        dynamic_query = f"SELECT * FROM reading WHERE timestamp >= '{start_time}' AND timestamp <= '{current_time}' AND stationid = '{selected_station_id}';"
-
-        # Make a POST request to Node-RED with basic authentication
-        response = requests.post(
-            node_red_api_endpoint,
-            json={"query": dynamic_query},
+        params = {
+            'stationid': selected_station_id,
+            'start_time': start_time,
+            'end_time': current_time
+        }
+        
+        response = requests.get(
+            node_red_api_endpoint, 
+            params=params,
             auth=(username, password)
-        )
+            )
+        # Make a POST request to Node-RED with basic authentication
+        
+        
 
         if response.status_code == 200:
             data = response.json()
@@ -76,6 +90,22 @@ def app():
 
             # Plot a line chart using Plotly Express with adjusted x-axis range
             fig = px.line(df, x='timestamp', y='value', title=f"Water levels in the last {time_range}")
+            threshold_value = get_threshold(user_email)['threshold']
+            station_id_value = get_threshold(user_email)['stationid']
+            
+
+            if threshold_value is not None and station_id_value == selected_station[1]:
+                # Add a horizontal line for the threshold
+                fig.add_shape(
+                    dict(
+                        type='line',
+                        x0=start_time,
+                        x1=current_time,
+                        y0=threshold_value,
+                        y1=threshold_value,
+                        line=dict(color='red', width=2)
+                    )
+                )
             
             # Set x-axis range based on the time range
             fig.update_xaxes(range=[start_time, current_time])
@@ -87,9 +117,9 @@ def app():
 
 
 
-    def set_threshold(station_id, threshold):
+    def set_threshold(user_email, station_id, threshold):
         threshold_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/threshold"
-        threshold_data = {"stationid": station_id, "threshold": threshold}
+        threshold_data = {"email":user_email,"stationid": station_id, "threshold": threshold}
 
         response = requests.post(
             threshold_endpoint,
@@ -127,8 +157,16 @@ def app():
 
     # Button to set threshold
     if st.button("Set Threshold"):
-        set_threshold(selected_station[1], threshold)
+        set_threshold(st.session_state.useremail, selected_station[1], threshold)
 
 
     # Call the function with the selected time range and station
-    fetch_data_and_plot(time_range, selected_station)
+    fetch_data_and_plot(time_range, selected_station, st.session_state.useremail)
+
+    #button to call the get_threshold function
+    if st.button("Get Threshold"):
+        threshold_value = get_threshold(st.session_state.useremail)
+        if threshold_value is not None:
+            st.write(f"Threshold is set to {threshold_value}")
+        else:
+            st.write("Threshold is not set")

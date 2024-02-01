@@ -3,7 +3,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 
-import home, account, report, water_levels, about
+import home, account, report, water_levels, about, storage, files
 st.set_page_config(
         page_title="Water Guardian",
 )
@@ -27,7 +27,7 @@ class MultiApp:
             with st.sidebar:        
                 app = option_menu(
                     menu_title='Water Guardian',
-                    options=['Home','Account','Report','Water levels','about'],
+                    options=['Home','Account','Report','Water Levels','Storage','Files','About'],
                     icons=['house-fill','person-circle','trophy-fill','chat-fill','info-circle-fill'],
                     menu_icon='chat-text-fill',
                     default_index=1,
@@ -46,10 +46,14 @@ class MultiApp:
                 account.app()    
             if app == "Report":
                 report.app()        
-            if app == 'Water levels':
+            if app == 'Water Levels':
                 water_levels.app()
-            if app == 'about':
-                about.app()    
+            if app == 'About':
+                about.app() 
+            if app == 'Storage':
+                storage.app()
+            if app == 'Files' :
+                files.app()
                          
     run()            
          

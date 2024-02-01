@@ -8,5 +8,5 @@ pandas
 plotly
 requests
 streamlit-folium
-python-decouple
+streamlit-tailwind
 

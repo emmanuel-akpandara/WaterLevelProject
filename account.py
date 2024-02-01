@@ -3,6 +3,7 @@ import firebase_admin
 from firebase_admin import firestore
 from firebase_admin import credentials
 from firebase_admin import auth
+import requests
 # from config import FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY_ID, FIREBASE_PRIVATE_KEY, FIREBASE_CLIENT_EMAIL, FIREBASE_CLIENT_ID, FIREBASE_AUTH_URI, FIREBASE_TOKEN_URI, FIREBASE_AUTH_PROVIDER_CERT_URL, FIREBASE_CLIENT_CERT_URL, FIREBASE_UNIVERSE_DOMAIN
 
 
@@ -19,8 +20,10 @@ cred = credentials.Certificate({
     "client_x509_cert_url": st.secrets["CLIENT_X509_CERT_URL"],
     "universe_domain": st.secrets["UNIVERSE_DOMAIN"]
 })
-# cred = credentials.Certificate('gitguardians-app-2e4d25999060.json')
+cred = credentials.Certificate('gitguardians-app-2e4d25999060.json')
 # firebase_admin.initialize_app(cred)
+
+# firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
 def app():
 # Usernm = []
     st.title('Welcome to the :violet[Water Guardian] portal :sunglasses:')
@@ -30,6 +33,23 @@ def app():
     if 'useremail' not in st.session_state:
         st.session_state.useremail = ''
 
+    auth_username = "group2"
+    auth_password = "4KuN8i52qWGz8HULbBHuaZyT"
+
+    def new_user(user_name, user_email):
+        new_user_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/createuser"
+        new_user_data = {"username": user_name, "email": user_email}
+
+        response = requests.post(
+            new_user_endpoint,
+            json=new_user_data,
+            auth=(auth_username, auth_password)
+        )
+
+        if response.status_code == 200:
+            st.success("user created successfully!")
+        else:
+            st.error(f"Error creating user: {response.status_code} - {response.text}")
 
 
     def f(): 
@@ -78,7 +98,7 @@ def app():
             
             if st.button('Create my account'):
                 user = auth.create_user(email = email, password = password,uid=username)
-                
+                new_user(username,email)
                 st.success('Account created successfully!')
                 st.markdown('Please Login using your email and password')
                 st.balloons()
