@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import requests
 import streamlit.components.v1 as components
+import time
 
 
 # Initialize Firebase
@@ -36,34 +37,6 @@ def get_stations():
         st.error(f"Error from Node-RED: {response.status_code} - {response.text}")
         return []
 
-def edit_file(selected_option, selected_station, old_file_name, new_file_name):
-    print("edit function called")
-    # Construct the full file paths based on the selected option, station, and file names
-    option_folder = "sensor_setup" if selected_option == "Sensor Setup" else "survey_plan"
-    old_file_path = f"users/{st.session_state.username}/{option_folder}/{selected_station[0]}/{old_file_name}"
-    new_file_path = f"users/{st.session_state.username}/{option_folder}/{selected_station[0]}/{new_file_name}"
-    print("preparing to rename file: ", old_file_path, new_file_path)
-
-    try:
-        # Use Firebase storage to rename the file
-        bucket = storage.bucket()
-        print("bucket: ", bucket)
-        blob_old = bucket.blob(old_file_path)
-        print("blob_old: ", blob_old)
-        blob_new = bucket.blob(new_file_path)
-        print("blob_new: ", blob_new)
-
-        # Copy the contents of the old file to the new file
-        blob_new.upload_from_blob(blob_old)
-        print("blob_new uploaded from blob_old")
-
-        # Delete the old file
-        blob_old.delete()
-        print("blob_old deleted")
-
-        st.success(f"File '{old_file_name}' renamed to '{new_file_name}' successfully!")
-    except Exception as e:
-        st.error(f"Error editing file: {e}")
 
 
 def delete_file(selected_option, selected_station, file_id):
@@ -78,9 +51,12 @@ def delete_file(selected_option, selected_station, file_id):
         blob.delete()
 
         st.success(f"File '{file_id}' deleted successfully!")
+        # Refresh the page after deleting the file
+        time.sleep(2)
+        st.experimental_rerun()
+
     except Exception as e:
         st.error(f"Error deleting file: {e}")
-
 
 
 def list_files(option, station):
@@ -134,14 +110,9 @@ def app():
         if file_checkbox:
             selected_file = file_name
 
-    # Edit button to rename the selected file
-    if st.button("Edit Selected File"):
-        new_file_name = st.text_input("Enter new name", key="edit_selected_file")
-        if new_file_name:
-            st.write(selected_option, selected_station, selected_file, new_file_name)
-            edit_file(selected_option, selected_station, selected_file, new_file_name)
-
     # Delete button to delete the selected file
     if st.button("Delete Selected File"):
         delete_file(selected_option, selected_station, selected_file)
         st.success(f"File '{selected_file}' deleted successfully.")
+
+    

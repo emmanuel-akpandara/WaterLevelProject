@@ -4,10 +4,7 @@ import firebase_admin
 from firebase_admin import credentials, storage
 import requests
 import pandas as pd
-
-# Initialize Firebase
-cred = credentials.Certificate("gitguardians-app-2e4d25999060.json")
-# firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
+import time
 
 def app():
     st.subheader('Welcome to the storage page!')
@@ -25,8 +22,6 @@ def app():
 
     def get_stations():
         node_red_api_endpoint = stations_endpoint
-
-        # Modify the query to include the selected station
         
         # Make a GET request to Node-RED with basic authentication
         response = requests.get(
@@ -77,4 +72,6 @@ def app():
             blob = bucket.blob(destination_blob_name)
             blob.upload_from_file(uploaded_file)
 
-            st.success(f"File {new_filename} uploaded successfully to {destination_blob_name}")
+            st.success(f"File {new_filename} uploaded successfully")
+            time.sleep(2)
+            st.experimental_rerun()

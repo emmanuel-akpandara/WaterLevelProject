@@ -4,8 +4,6 @@ from firebase_admin import firestore
 from firebase_admin import credentials
 from firebase_admin import auth
 import requests
-# from config import FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY_ID, FIREBASE_PRIVATE_KEY, FIREBASE_CLIENT_EMAIL, FIREBASE_CLIENT_ID, FIREBASE_AUTH_URI, FIREBASE_TOKEN_URI, FIREBASE_AUTH_PROVIDER_CERT_URL, FIREBASE_CLIENT_CERT_URL, FIREBASE_UNIVERSE_DOMAIN
-
 
 cred = credentials.Certificate({
     "type": st.secrets["TYPE"],
@@ -21,9 +19,8 @@ cred = credentials.Certificate({
     "universe_domain": st.secrets["UNIVERSE_DOMAIN"]
 })
 # cred = credentials.Certificate('gitguardians-app-2e4d25999060.json')
-# firebase_admin.initialize_app(cred)
 
-# firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
+firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
 def app():
 # Usernm = []
     st.title('Welcome to the :violet[Water Guardian] portal :sunglasses:')
@@ -113,8 +110,4 @@ def app():
                 st.button('Sign out', on_click=t) 
             
                 
-    
 
-                            
-    def ap():
-        st.write('Posts')
