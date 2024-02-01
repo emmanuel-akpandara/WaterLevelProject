@@ -9,10 +9,6 @@ import streamlit.components.v1 as components
 import time
 
 
-# Initialize Firebase
-cred = credentials.Certificate("gitguardians-app-2e4d25999060.json")
-# firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
-
 stations_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/app/stations"
 
 # User credentials for basic authentication
