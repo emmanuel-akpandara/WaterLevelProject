@@ -20,8 +20,8 @@ cred = credentials.Certificate({
     "client_x509_cert_url": st.secrets["CLIENT_X509_CERT_URL"],
     "universe_domain": st.secrets["UNIVERSE_DOMAIN"]
 })
-cred = credentials.Certificate('gitguardians-app-2e4d25999060.json')
-# firebase_admin.initialize_app(cred)
+# cred = credentials.Certificate('gitguardians-app-2e4d25999060.json')
+firebase_admin.initialize_app(cred)
 
 # firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
 def app():
