@@ -21,9 +21,9 @@ cred = credentials.Certificate({
     "universe_domain": st.secrets["UNIVERSE_DOMAIN"]
 })
 # cred = credentials.Certificate('gitguardians-app-2e4d25999060.json')
-firebase_admin.initialize_app(cred)
+# firebase_admin.initialize_app(cred)
 
-# firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
+firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
 def app():
 # Usernm = []
     st.title('Welcome to the :violet[Water Guardian] portal :sunglasses:')
