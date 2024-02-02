@@ -3,11 +3,11 @@ from imports import *
   
 def app():
     # # Node-RED API endpoint
-    readings_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/app/readings"
-    stations_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/app/stations"
+    readings_endpoint = st.secrets["READINGS_ENDPOINT"]  
+    stations_endpoint = st.secrets["STATIONS_ENDPOINT"]
     # User credentials for basic authentication
-    username = "group2"
-    password = "4KuN8i52qWGz8HULbBHuaZyT"
+    username = st.secrets["NODE_RED_USERNAME"]
+    password = st.secrets["NODE_RED_PASSWORD"]
 
 
 

@@ -2,8 +2,8 @@ from imports import *
 
 
 # Replace 'YOUR_NODE_RED_USERNAME' and 'YOUR_NODE_RED_PASSWORD' with your Node-RED credentials
-NODE_RED_USERNAME = 'group2'
-NODE_RED_PASSWORD = '4KuN8i52qWGz8HULbBHuaZyT'
+NODE_RED_USERNAME = st.secrets["NODE_RED_USERNAME"]
+NODE_RED_PASSWORD = st.secrets["NODE_RED_PASSWORD"]
 
 
 def app():
@@ -27,7 +27,7 @@ def app():
     
 
     def post_reading(lock: int, longitude: float, latitude: float, timestamp: str, value: int, unit: str):
-        url = "https://node-red-group2.smartville-poc.mycsn.be/postreading"
+        url = st.secrets["POST_READING_URL"]
         data = [{
             "lock": lock,
             "longitude": longitude,
@@ -48,14 +48,13 @@ def app():
     latitude = 0.0
     longitude = 0.0
     
-    # Slider for lock (from 10 to 100 in increments of 10)
+    
     lock_value = st.slider("Lock (%)", min_value=0, max_value=100, step=10, value=50)
 
-    # Get user input for address
+    
     address = st.text_input("Enter an address:")
 
-    # Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
-    api_key = 'aaa5f2926ad148798c8ca3f187b60dc3'
+    api_key = st.secrets["OPENCAGE_API_KEY"]
 
     if st.button("Convert"):
         # Convert address to latitude and longitude
@@ -81,12 +80,6 @@ def app():
     timestamp = datetime.combine(date_value, time_value)
     timestamp = timestamp.isoformat() + "Z"
 
-    # # Assign default values to latitude and longitude
-    # latitude = st.text_input("Latitude", value=latitude if 'latitude' in locals() else 0.0)
-    # longitude = st.number_input("Longitude", value=longitude if 'longitude' in locals() else 0.0)
-
-    
-    
     
     # Integer text box for value
     value = st.number_input("Height of water", value=2, format="%d", step=1)
@@ -104,9 +97,7 @@ def app():
 
 
     if st.button("Send Reading"):
-        # Send data to the specified URL
         post_reading(lock_value, st.session_state.longitude, st.session_state.latitude, timestamp, value, unit)
-        # print(longitude,latitude)
-        # print(st.session_state.longitude,st.session_state.latitude)
+        
 
 

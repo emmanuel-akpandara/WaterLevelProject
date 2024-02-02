@@ -13,11 +13,9 @@ cred = credentials.Certificate({
     "client_x509_cert_url": st.secrets["CLIENT_X509_CERT_URL"],
     "universe_domain": st.secrets["UNIVERSE_DOMAIN"]
 })
-# cred = credentials.Certificate('gitguardians-app-2e4d25999060.json')
 
 # firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
 def app():
-# Usernm = []
     st.title('Welcome to the :violet[Water Guardian] portal :sunglasses:')
 
     if 'username' not in st.session_state:
@@ -25,8 +23,8 @@ def app():
     if 'useremail' not in st.session_state:
         st.session_state.useremail = ''
 
-    auth_username = "group2"
-    auth_password = "4KuN8i52qWGz8HULbBHuaZyT"
+    auth_username = st.secrets["NODE_RED_USERNAME"]
+    auth_password = st.secrets["NODE_RED_PASSWORD"]
 
     def new_user(user_name, user_email):
         new_user_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/createuser"

@@ -8,11 +8,11 @@ def app():
         st.warning("You need to be logged in to view this content.")
         return
     
-    stations_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/app/stations"
+    stations_endpoint = st.secrets["STATIONS_ENDPOINT"]
 
     # User credentials for basic authentication
-    nodered_username = "group2"
-    nodered_password = "4KuN8i52qWGz8HULbBHuaZyT"
+    nodered_username = st.secrets["NODE_RED_USERNAME"]
+    nodered_password = st.secrets["NODE_RED_PASSWORD"]
 
     def get_stations():
         node_red_api_endpoint = stations_endpoint

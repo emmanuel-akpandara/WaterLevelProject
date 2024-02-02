@@ -28,7 +28,7 @@ class MultiApp:
                     menu_title='Water Guardian',
                     options=['Account', 'Report', 'Water Levels', 'Upload File', 'Files', 'About'],
                     icons=['person-circle','chat-fill','water','cloud-upload','list-task','info-circle-fill'],
-                    menu_icon='shield',  # You can choose a different emoji for the menu icon
+                    menu_icon='shield',  
                     default_index=1,
                     styles={
                         "container": {"padding": "5!important", "background-color": 'black'},
