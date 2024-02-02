@@ -27,7 +27,7 @@ def app():
     auth_password = st.secrets["NODE_RED_PASSWORD"]
 
     def new_user(user_name, user_email):
-        new_user_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/createuser"
+        new_user_endpoint = st.secrets("NEW_USER_ENDPOINT")
         new_user_data = {"username": user_name, "email": user_email}
 
         response = requests.post(

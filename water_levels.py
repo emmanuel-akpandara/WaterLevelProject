@@ -29,17 +29,14 @@ def app():
             return []
         
     def get_threshold(user_email):
-        threshold_endpoint = f"https://node-red-group2.smartville-poc.mycsn.be/threshold?email={user_email}"
+        threshold_endpoint = st.secrets["GET_THRESHOLD_ENDPOINT"]+user_email
         response = requests.get(threshold_endpoint, auth=(username, password))
         print("function called")
         if response.status_code == 200:
             data = response.json()
             print("successfully fetched threshold")
             if data:
-                # print(data[0]['stationid'])
-                # return data[0]['threshold']
                 return data[0]
-                
         return None
     
     def fetch_data_and_plot(time_range, selected_station, user_email):
@@ -74,10 +71,7 @@ def app():
             params=params,
             auth=(username, password)
             )
-        # Make a POST request to Node-RED with basic authentication
         
-        
-
         if response.status_code == 200:
             data = response.json()
             df = pd.json_normalize(data)
@@ -112,7 +106,7 @@ def app():
 
 
     def set_threshold(user_email, station_id, threshold):
-        threshold_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/threshold"
+        threshold_endpoint = st.secrets["THRESHOLD_ENDPOINT"]
         threshold_data = {"email":user_email,"stationid": station_id, "threshold": threshold}
 
         response = requests.post(
