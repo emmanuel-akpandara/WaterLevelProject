@@ -1,11 +1,4 @@
-import streamlit as st
-from datetime import datetime
-import folium
-import geocoder
-from streamlit_folium import folium_static
-from opencage.geocoder import OpenCageGeocode
-from typing import Optional, Tuple
-import requests
+from imports import *
 
 
 # Replace 'YOUR_NODE_RED_USERNAME' and 'YOUR_NODE_RED_PASSWORD' with your Node-RED credentials

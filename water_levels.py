@@ -1,10 +1,4 @@
-import streamlit as st
-import pandas as pd
-from datetime import datetime, timedelta
-import requests
-import plotly.express as px
-
-from firebase_admin import firestore
+from imports import *
 
   
 def app():

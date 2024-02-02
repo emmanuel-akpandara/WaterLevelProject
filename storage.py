@@ -1,10 +1,4 @@
-import streamlit as st
-from datetime import datetime
-import firebase_admin
-from firebase_admin import credentials, storage
-import requests
-import pandas as pd
-import time
+from imports import *
 
 def app():
     st.subheader('Welcome to the storage page!')

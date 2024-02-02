@@ -1,6 +1,4 @@
-import streamlit as st
-
-from streamlit_option_menu import option_menu
+from imports import *
 
 
 import account, report, water_levels, about, storage, files

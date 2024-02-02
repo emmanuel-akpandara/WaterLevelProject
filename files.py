@@ -1,13 +1,9 @@
-import streamlit as st
-from datetime import datetime
-import firebase_admin
-from firebase_admin import credentials, storage
-import os
-import pandas as pd
-import requests
-import streamlit.components.v1 as components
-import time
-
+# import streamlit as st
+# from datetime import datetime
+# import firebase_admin
+# from firebase_admin import credentials, storage
+# import os
+from imports import *
 
 stations_endpoint = "https://node-red-group2.smartville-poc.mycsn.be/app/stations"
 

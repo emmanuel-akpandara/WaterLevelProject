@@ -1,9 +1,4 @@
-import streamlit as st
-import firebase_admin
-from firebase_admin import firestore
-from firebase_admin import credentials
-from firebase_admin import auth
-import requests
+from imports import *
 
 cred = credentials.Certificate({
     "type": st.secrets["TYPE"],
