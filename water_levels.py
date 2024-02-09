@@ -150,11 +150,3 @@ def app():
 
     # Call the function with the selected time range and station
     fetch_data_and_plot(time_range, selected_station, st.session_state.useremail)
-
-    #button to call the get_threshold function
-    if st.button("Get Threshold"):
-        threshold_value = get_threshold(st.session_state.useremail)
-        if threshold_value is not None:
-            st.write(f"Threshold is set to {threshold_value}")
-        else:
-            st.write("Threshold is not set")
