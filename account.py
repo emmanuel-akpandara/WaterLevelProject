@@ -16,7 +16,7 @@ cred = credentials.Certificate({
 
 firebase_admin.initialize_app(cred, {'storageBucket': 'gitguardians-app.appspot.com'})
 def app():
-    st.title('Welcome to the :violet[Water Guardian] portal :sunglasses:')
+    st.title('Welcome to the :violet[Water Guardian] portal')
 
     if 'username' not in st.session_state:
         st.session_state.username = ''
