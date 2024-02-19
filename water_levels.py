@@ -79,16 +79,17 @@ def app():
             # Plot a line chart using Plotly Express with adjusted x-axis range
             fig = px.line(df, x='timestamp', y='value', title=f"Water levels in the last {time_range}")
             station_threshold = get_threshold(user_email)
-            st.write(station_threshold)
-            station_id_value = station_threshold['stationid']
+            # st.write(station_threshold)
+            # station_id_value = station_threshold['stationid']
  
-            try:
-                threshold_value = station_threshold['threshold']
-            except:
-                threshold_value=None
+            # try:
+            #     threshold_value = station_threshold['threshold']
+            # except:
+            #     threshold_value=None
             
 
-            if threshold_value is not None and station_id_value == selected_station[1]:
+            if station_threshold is not None and station_threshold['stationid'] == selected_station[1]:
+                threshold_value = station_threshold['threshold']
                 # Add a horizontal line for the threshold
                 fig.add_shape(
                     dict(
