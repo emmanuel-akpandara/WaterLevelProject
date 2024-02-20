@@ -37,7 +37,7 @@ def app():
         )
 
         if response.status_code == 200:
-            st.success("user created successfully!")
+            st.success("Saved User!")
         else:
             st.error(f"Error creating user: {response.status_code} - {response.text}")
 
