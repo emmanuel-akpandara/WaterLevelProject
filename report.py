@@ -10,9 +10,9 @@ def app():
     st.subheader('Welcome to the alert page')
 
      # Check if the user is logged in
-    if 'username' not in st.session_state or not st.session_state.username:
-        st.warning("You need to be logged in to view this content.")
-        return
+    # if 'username' not in st.session_state or not st.session_state.username:
+    #     st.warning("You need to be logged in to view this content.")
+    #     return
     
 
     def address_to_latlng(address: str, api_key: str) -> Optional[Tuple[float, float]]:
