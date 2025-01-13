@@ -122,9 +122,9 @@ def app():
 
     st.title("Welcome to the graph Page")
 
-    if 'username' not in st.session_state or not st.session_state.username:
-        st.warning("You need to be logged in to view this content.")
-        return
+    # if 'username' not in st.session_state or not st.session_state.username:
+    #     st.warning("You need to be logged in to view this content.")
+    #     return
     st.write("This is the graph page.")
 
     # Dropdown for selecting the time range
